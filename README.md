@@ -6,3 +6,5 @@ then according to type show online normal, online urgent, physical normal, physi
 then complete token book send email 
 live
 astana whatsapp group  
+
+now set master project as updated work
