@@ -19,23 +19,91 @@ class TokenController {
     header('Content-Type: application/json');
     
     try {
-        $tokenTypeId = $this->validation->sanitizeInput($_GET['token_type'] ?? null);
+        $drId = $this->validation->sanitizeInput($_GET['drId'] ?? null);
         
-        if (!$tokenTypeId) {
-            throw new Exception("Token type is required");
+        if (!$drId) {
+            throw new Exception("Hazrat selection is required");
         }
         
         // Check token type availability first
-        if (!$this->token->checkTokenTypeAvailability($tokenTypeId, date('Y-m-d'))) {
-            $tokenType = $this->token->tokenCon->getOne('token_types', ['id' => $tokenTypeId]);
-            throw new Exception("{$tokenType['type_name']} tokens are not available");
-        }
+      
+            $dr = $this->token->getOneDoctors($drId);
+            if(sizeof($dr) == 0){
+                throw new Exception("{#doctorId} not available");
+            }
+      
         
-        $dates = $this->token->getAvailableDates(null, $tokenTypeId, 60);
+        $dates = $this->token->getAvailableDates($drId , 1);
         
         echo json_encode([
             'success' => true,
             'dates' => $dates
+        ]);
+        
+    } catch (Exception $e) {
+        echo json_encode([
+            'success' => false,
+            'message' => $e->getMessage()
+        ]);
+    }
+}
+    public function getAllowToken() {
+    header('Content-Type: application/json');
+    
+    // try {
+        $drId = $this->validation->sanitizeInput($_GET['drId'] ?? null);
+        $date = $_GET['date'] ?? null;
+        
+        if (!$drId) {
+            throw new Exception("Hazrat selection is required");
+        }
+        
+        // Check token type availability first
+      
+            $dr = $this->token->getOneDoctors($drId);
+            if(sizeof($dr) == 0){
+                throw new Exception("{#doctorId} not available");
+            }
+      
+        
+        $dayOfWeek = date('N', strtotime($date));
+      $doctorDay = $dayOfWeek == 7 ? 1 : $dayOfWeek + 1; // Convert to 1=Sunday
+    $data=  $this->token->tokenCon->getAll("token_type_restrictions", ['doctor_id' => $drId, "day_of_week" => $doctorDay]);
+        
+        echo json_encode([
+            'success' => true,
+            'data' => $data
+        ]);
+        
+    // } catch (Exception $e) {
+    //     echo json_encode([
+    //         'success' => false,
+    //         'message' => $e->getMessage()
+    //     ]);
+    // }
+}
+
+public function getTokenCategories(){
+    header('Content-Type: application/json');
+    
+    try {
+        $date = $this->validation->sanitizeInput($_GET['date'] ?? null);
+        $tokenTypeId = $this->validation->sanitizeInput($_GET['token_type'] ?? null);
+        $drId = $this->validation->sanitizeInput($_GET['drId'] ?? null);
+        
+        if (!$date || !$tokenTypeId) {
+            throw new Exception("Date and token type are required");
+        }
+
+        $cat = $this->token->getTokenCategories($drId, $tokenTypeId, $date);
+        
+        if (empty($cat)) {
+            throw new Exception("No catogry available on selected date");
+        }
+        
+        echo json_encode([
+            'success' => true,
+            'data' => $cat
         ]);
         
     } catch (Exception $e) {
@@ -104,6 +172,10 @@ public function getAvailableDoctors() {
             switch ($action) {
         case 'get_available_dates':
             return $this->getAvailableDates();
+        case 'getAllowToken':
+            return $this->getAllowToken();
+        case 'get_category':
+            return $this->getTokenCategories();
         case 'get_available_doctors':
             return $this->getAvailableDoctors();
         case 'book':

@@ -101,12 +101,19 @@ class Token {
         return $this->db->getAll('token_types', ['is_active' => 1]);
     }
 
-    public function getTokenCategories() {
-        return $this->db->getAll('token_categories', ['is_active' => 1]);
+    public function getTokenCategories($drId='', $type_id='', $date= '') {
+        if(!empty($type_id) && isset($type_id)){
+           return $this->db->getAll("token_categories tc", ["tc.token_type_id"=> $type_id, "is_active"=> 1], '', '', [],"tc.*, (SELECT count(*) from tokens where token_type_id = $type_id and token_Category_id = tc.id and doctor_id = $drId and token_date = '$date' ) as total_given, (SELECT sum(daily_limit) from token_limits where token_type_id = $type_id and token_category_id = tc.id and is_active = 1) as limitdata");
+        }else{
+            return $this->db->getAll('token_categories', ['is_active' => 1]);
+            }
     }
 
     public function getDoctors() {
         return $this->db->getAll('doctors', ['is_active' => 1]);
+    }
+    public function getOneDoctors($id) {
+        return $this->db->getOne('doctors', ['is_active' => 1, 'id'=> $id]);
     }
 
     public function getFormattedTokenNumber($sequentialNumber, $typeId, $categoryId, $date) {
@@ -233,21 +240,19 @@ public function getAvailableDoctors($date, $tokenTypeId = null) {
     return $availableDoctors;
 }
 
-public function getAvailableDates($doctorId = null, $tokenTypeId = null, $daysAhead = 30) {
+public function getAvailableDates($doctorId = null, $daysAhead = 30) {
     $availableDates = [];
     $currentDate = date('Y-m-d');
     
     for ($i = 0; $i < $daysAhead; $i++) {
         $date = date('Y-m-d', strtotime("+$i days"));
+        $dayOfWeek = date('N', strtotime($date));
+         $dayOfWeek = $dayOfWeek == 7 ? 1 : $dayOfWeek + 1; // Convert to 1=Sunday
         $isAvailable = true;
         
-        // Check token type availability
-        if ($tokenTypeId && !$this->checkTokenTypeAvailability($tokenTypeId, $date)) {
-            $isAvailable = false;
-        }
         
         // Check doctor availability
-        if ($doctorId && $isAvailable && !$this->checkDoctorAvailability($doctorId, $date)) {
+        if ($doctorId && !$this->checkDoctorAvailability($doctorId,  $date)) {
             $isAvailable = false;
         }
         
@@ -261,6 +266,15 @@ public function getAvailableDates($doctorId = null, $tokenTypeId = null, $daysAh
     
     return $availableDates;
 }
+
+// public function tokenAllowThisDay($drId,$date){
+    
+//      $dayOfWeek = date('N', strtotime($date));
+//       $doctorDay = $dayOfWeek == 7 ? 1 : $dayOfWeek + 1; // Convert to 1=Sunday
+//     return $this->db->getAll("token_type_restrictions", ['doctor_id' => $drId, "day_of_week" => $doctorDay]);
+     
+
+// } 
 
 public function getDoctorSchedule($doctorId) {
     return $this->db->getAll('doctor_schedules', [

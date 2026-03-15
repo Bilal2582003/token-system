@@ -24,15 +24,17 @@ $csrfToken = $validation->generateCSRFToken();
     <title><?php echo htmlspecialchars($clinicInfo['clinic_name']); ?> - Online Token Booking</title>
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet"> -->
     <link href="../assets/bootstrap.min.css" rel="stylesheet">
-<link href="../assets/bootstrap-icons.css" rel="stylesheet">
-<link href="../assets/all.min.css" rel="stylesheet">
-<link href="../assets/aos.css" rel="stylesheet">
+    <link href="../assets/bootstrap-icons.css" rel="stylesheet">
+    <link href="../assets/all.min.css" rel="stylesheet">
+    <link href="../assets/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
     :root {
-        --primary-color: #2c3e50;
+        /* --primary-color: #2c3e50; */
+        /* --secondary-color: #3498db; */
+        --primary-color: #df12cb;
         --secondary-color: #3498db;
         --accent-color: #e74c3c;
         --success-color: #27ae60;
@@ -47,7 +49,8 @@ $csrfToken = $validation->generateCSRFToken();
     }
 
     body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+        background: linear-gradient(135deg, #f58feb 0%, #764ba2 100%);
         min-height: 100vh;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         overflow-x: hidden;
@@ -667,8 +670,8 @@ $csrfToken = $validation->generateCSRFToken();
                                     </div>
                                     <div class="d-flex justify-content-between mt-2">
                                         <small class="text-muted">Personal Details</small>
-                                        <small class="text-muted">Appointment Type</small>
                                         <small class="text-muted">Date & Time</small>
+                                        <small class="text-muted">Appointment Type</small>
                                         <small class="text-muted">Confirmation</small>
                                     </div>
                                 </div>
@@ -709,8 +712,64 @@ $csrfToken = $validation->generateCSRFToken();
                                 </div>
                             </div>
 
-                            <!-- Token Type Selection -->
+                            <!-- Doctor & Time Selection -->
                             <div class="form-step" id="step2" style="display: none;">
+                                <h3 class="section-title mb-4">
+                                    <i class="fas fa-user-md me-2"></i>Hazrat & Time Selection
+                                </h3>
+
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold fs-6">Select *</label>
+                                        <select class="form-select" name="doctor" id="doctorId" required>
+                                            <option value="">Choose...</option>
+                                            <?php foreach ($doctors as $doctor): ?>
+                                            <option value="<?php echo $doctor['id']; ?>">
+                                                <?php echo htmlspecialchars($doctor['name']); ?> -
+                                                <?php echo htmlspecialchars($doctor['specialization']); ?>
+                                            </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <div class="form-text">Choose your preferred</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-bold fs-6">Appointment Date *</label>
+                                        <select class="form-select" name="token_date" required id="appointmentDate">
+                                            <option value="">Select Date</option>
+                                            <!-- Dates will be loaded dynamically -->
+                                        </select>
+                                        <div class="form-text">Only available dates are shown</div>
+                                    </div>
+
+                                    <!-- <div class="col-12">
+                                        <label class="form-label fw-bold fs-6">Preferred Time Slot *</label>
+                                        <div class="time-slots-container" id="timeSlotsContainer">
+                                            <div class="text-center py-4">
+                                                <div class="loading-dots">
+                                                    <div></div>
+                                                    <div></div>
+                                                    <div></div>
+                                                    <div></div>
+                                                </div>
+                                                <p class="text-muted mt-2">Loading available time slots...</p>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+
+                                <div class="d-flex justify-content-between mt-4">
+                                    <button type="button" class="btn btn-outline-secondary prev-step" data-prev="step1">
+                                        <i class="fas fa-arrow-left me-2"></i>Back
+                                    </button>
+                                    <button type="button" class="btn btn-primary next-step" data-next="step3">
+                                        Continue <i class="fas fa-arrow-right ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Token Type Selection -->
+                            <div class="form-step" id="step3" style="display: none;">
                                 <h3 class="section-title mb-4">
                                     <i class="fas fa-calendar-alt me-2"></i>Token Type
                                 </h3>
@@ -754,71 +813,17 @@ $csrfToken = $validation->generateCSRFToken();
                                 </div>
 
                                 <div class="d-flex justify-content-between mt-4">
-                                    <button type="button" class="btn btn-outline-secondary prev-step" data-prev="step1">
+                                    <button type="button" class="btn btn-outline-secondary prev-step" data-prev="step2">
                                         <i class="fas fa-arrow-left me-2"></i>Back
                                     </button>
-                                    <button type="button" class="btn btn-primary next-step" data-next="step3"
+                                    <button type="button" class="btn btn-primary next-step" data-next="step4"
                                         id="step2Next" disabled>
                                         Continue <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- Doctor & Time Selection -->
-                            <div class="form-step" id="step3" style="display: none;">
-                                <h3 class="section-title mb-4">
-                                    <i class="fas fa-user-md me-2"></i>Hazrat & Time Selection
-                                </h3>
 
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <label class="form-label fw-bold fs-6">Select *</label>
-                                        <select class="form-select" name="doctor" required>
-                                            <option value="">Choose...</option>
-                                            <?php foreach ($doctors as $doctor): ?>
-                                            <option value="<?php echo $doctor['id']; ?>">
-                                                <?php echo htmlspecialchars($doctor['name']); ?> -
-                                                <?php echo htmlspecialchars($doctor['specialization']); ?>
-                                            </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                        <div class="form-text">Choose your preferred</div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label class="form-label fw-bold fs-6">Appointment Date *</label>
-                                        <select class="form-select" name="token_date" required id="appointmentDate">
-                                            <option value="">Select Date</option>
-                                            <!-- Dates will be loaded dynamically -->
-                                        </select>
-                                        <div class="form-text">Only available dates are shown</div>
-                                    </div>
-
-                                    <!-- <div class="col-12">
-                                        <label class="form-label fw-bold fs-6">Preferred Time Slot *</label>
-                                        <div class="time-slots-container" id="timeSlotsContainer">
-                                            <div class="text-center py-4">
-                                                <div class="loading-dots">
-                                                    <div></div>
-                                                    <div></div>
-                                                    <div></div>
-                                                    <div></div>
-                                                </div>
-                                                <p class="text-muted mt-2">Loading available time slots...</p>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                </div>
-
-                                <div class="d-flex justify-content-between mt-4">
-                                    <button type="button" class="btn btn-outline-secondary prev-step" data-prev="step2">
-                                        <i class="fas fa-arrow-left me-2"></i>Back
-                                    </button>
-                                    <button type="button" class="btn btn-primary next-step" data-next="step4">
-                                        Continue <i class="fas fa-arrow-right ms-2"></i>
-                                    </button>
-                                </div>
-                            </div>
 
                             <!-- Confirmation -->
                             <div class="form-step" id="step4" style="display: none;">
@@ -912,7 +917,7 @@ $csrfToken = $validation->generateCSRFToken();
                     <p class="text-muted mb-4" id="successMessage">Your appointment has been successfully booked.</p>
                     <div class="d-grid gap-2">
                         <button onclick="gotoSuccess()" class="btn btn-primary">View Appointment Details</button>
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Book
+                        <button type="button" class="btn btn-outline-secondary" onclick="window.location.reload()">Book
                             Another</button>
                     </div>
                 </div>
@@ -922,8 +927,8 @@ $csrfToken = $validation->generateCSRFToken();
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script> -->
-    <script src="../assets/bootstrap.bundle.min.js" ></script>
-<script src="../assets/aos.js" ></script>
+    <script src="../assets/bootstrap.bundle.min.js"></script>
+    <script src="../assets/aos.js"></script>
     <script>
     // Initialize animations
     AOS.init({
@@ -966,68 +971,105 @@ $csrfToken = $validation->generateCSRFToken();
     let allCategories = <?php echo json_encode($tokenCategories); ?>;
 
 
-// Load available dates based on selections
-function loadAvailableDates() {
-    const dateSelect = document.getElementById('appointmentDate');
-    const tokenType = selectedType;
-    
-    if (!tokenType) {
-        dateSelect.innerHTML = '<option value="">Select token type first</option>';
-        return;
-    }
+    // Load available dates based on selections
+    function loadAvailableDates(drId) {
+        console.log(drId)
+        const dateSelect = document.getElementById('appointmentDate');
+        // const tokenType = selectedType;
+
+        if (!drId) {
+            dateSelect.innerHTML = '<option value="">Select Hazrat First!</option>';
+            return;
+        }
+        console.log(drId)
         var csrfToken = document.querySelector('input[name="csrf_token"]').value;
 
-    
-    dateSelect.innerHTML = '<option value="">Loading dates...</option>';
-    
-    fetch(`process-token.php?action=get_available_dates&token_type=${tokenType}&csrf_token=${csrfToken}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success && data.dates.length > 0) {
-                let options = '<option value="">Select Date</option>';
-                data.dates.forEach(date => {
-                    options += `<option value="${date.date}">${date.display}</option>`;
-                });
-                dateSelect.innerHTML = options;
-            } else {
-                dateSelect.innerHTML = '<option value="">No available dates</option>';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            dateSelect.innerHTML = '<option value="">Error loading dates</option>';
-        });
-}
 
-// Load available doctors based on date and token type
-function loadAvailableDoctors(date) {
-    const doctorSelect = document.querySelector('select[name="doctor"]');
-    
-    if (!date || !selectedType) {
-        doctorSelect.innerHTML = '<option value="">Select date first</option>';
-        return;
+        dateSelect.innerHTML = '<option value="">Loading dates...</option>';
+
+        fetch(`process-token.php?action=get_available_dates&drId=${drId}&csrf_token=${csrfToken}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(drId)
+                if (data.success && data.dates.length > 0) {
+                    let options = '<option value="">Select Date</option>';
+                    var count = 0;
+                    data.dates.forEach(date => {
+                        options +=
+                            `<option ${ count == 0 ? 'selected' : '' } value="${date.date}">${date.display}</option>`;
+
+                        if (count == 0) updateTokenType(drId, date.date);
+                        count++;
+                    });
+                    dateSelect.innerHTML = options;
+
+
+                    // updateSummary();
+                } else {
+                    dateSelect.innerHTML = '<option value="">No available dates</option>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                dateSelect.innerHTML = '<option value="">Error loading dates</option>';
+            });
     }
-    
-    doctorSelect.innerHTML = '<option value="">Loading doctors...</option>';
-    var csrfToken = document.querySelector('input[name="csrf_token"]').value;
-    fetch(`process-token.php?action=get_available_doctors&date=${date}&token_type=${selectedType}&csrf_token=${csrfToken}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success && data.doctors.length > 0) {
-                let options = '<option value="">Choose...</option>';
-                data.doctors.forEach(doctor => {
-                    options += `<option value="${doctor.id}">${doctor.name} - ${doctor.specialization}</option>`;
-                });
-                doctorSelect.innerHTML = options;
-            } else {
-                doctorSelect.innerHTML = '<option value="">No doctors available</option>';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            doctorSelect.innerHTML = '<option value="">Error loading doctors</option>';
-        });
-}
+
+    var dateSelect = document.getElementById('appointmentDate');
+    dateSelect.addEventListener("change", (ele) => {
+
+        updateTokenType(document.getElementById('doctorId').value, ele.value)
+    })
+
+    function updateTokenType(drId, date) {
+        var csrfToken = document.querySelector('input[name="csrf_token"]').value;
+        fetch(`process-token.php?action=getAllowToken&drId=${drId}&date=${date}&csrf_token=${csrfToken}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(drId)
+                if (data.success) {
+                    data.data.forEach((d) => {
+                        var ele = document.querySelector(`[data-type-id="${d.token_type_id}"]`);
+
+                        if (ele) {
+                            ele.style.display = d.is_allowed == 1 ? "block" : "none";
+                        }
+                    })
+                }
+            })
+    }
+    // Load available doctors based on date and token type
+    function loadAvailableDoctors(date) {
+        const doctorSelect = document.querySelector('select[name="doctor"]');
+
+        if (!date || !selectedType) {
+            doctorSelect.innerHTML = '<option value="">Select date first</option>';
+            return;
+        }
+
+        doctorSelect.innerHTML = '<option value="">Loading doctors...</option>';
+        var csrfToken = document.querySelector('input[name="csrf_token"]').value;
+        fetch(
+                `process-token.php?action=get_available_doctors&date=${date}&token_type=${selectedType}&csrf_token=${csrfToken}`
+            )
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.doctors.length > 0) {
+                    let options = '<option value="">Choose...</option>';
+                    data.doctors.forEach(doctor => {
+                        options +=
+                            `<option value="${doctor.id}">${doctor.name} - ${doctor.specialization}</option>`;
+                    });
+                    doctorSelect.innerHTML = options;
+                } else {
+                    doctorSelect.innerHTML = '<option value="">No doctors available</option>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                doctorSelect.innerHTML = '<option value="">Error loading doctors</option>';
+            });
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         createParticles();
@@ -1062,19 +1104,27 @@ function loadAvailableDoctors(date) {
 
                 // Load categories for selected type
                 loadCategoriesForType(selectedType);
-                loadAvailableDates();
+                // loadAvailableDates();
                 updateProgress();
             });
         });
 
         // Date change handler
-        document.getElementById('appointmentDate').addEventListener('change', function() {
-           const date = this.value;
-        if (date) {
-            loadAvailableDoctors(date);
-            // generateTimeSlots();
-            updateSummary();
-        }
+        // document.getElementById('appointmentDate').addEventListener('change', function() {
+        //    const date = this.value;
+        // if (date) {
+        //     loadAvailableDoctors(date);
+        //     // generateTimeSlots();
+        //     updateSummary();
+        // }
+        // });
+
+        document.getElementById('doctorId').addEventListener('change', function() {
+            const drId = this.value;
+            if (drId) {
+                loadAvailableDates(drId);
+                // generateTimeSlots();
+            }
         });
 
         // Form submission
@@ -1093,64 +1143,96 @@ function loadAvailableDoctors(date) {
         const categoryContainer = document.getElementById('tokenCategorySelection');
         const step2Next = document.getElementById('step2Next');
 
-        // Filter categories for selected type
-        const filteredCategories = allCategories.filter(category => category.token_type_id == typeId);
+        var drId = document.getElementById("doctorId").value
+        var date = document.querySelector("#appointmentDate").value
+        var csrfToken = document.querySelector('input[name="csrf_token"]').value;
 
-        if (filteredCategories.length > 0) {
-            let categoriesHTML = '';
+        fetch(
+                `process-token.php?action=get_category&date=${date}&token_type=${typeId}&drId=${drId}&csrf_token=${csrfToken}`
+            )
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.data.length > 0) {
 
-            filteredCategories.forEach(category => {
-                const isUrgent = category.category_name.includes('urgent');
-                categoriesHTML += `
-                        <div class="col-md-6">
-                            <div class="token-type-card" data-category-id="${category.id}" data-price="${category.base_price}">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <h5 class="mb-0">
-                                        ${category.category_name}
-                                        ${isUrgent ? '<i class="fas fa-bolt ms-2 text-warning"></i>' : ''}
-                                    </h5>
+                    allCategories = data.data
+                    // Filter categories for selected type
+
+                    const filteredCategories = allCategories.filter(category => category.token_type_id == typeId);
+
+                    if (filteredCategories.length > 0) {
+                        let categoriesHTML = '';
+
+                        filteredCategories.forEach(category => {
+                            const isUrgent = category.category_name.includes('urgent');
+                            var total_remain = category.limitdata - category.total_given
+                            console.log(category.limitdata + ' ' + category.total_given);
+                            if (total_remain > 0) {
+
+                                categoriesHTML += `
+                    <div class="col-md-6">
+                    <div class="token-type-card" data-category-id="${category.id}" data-price="${category.base_price}">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="mb-0">
+                    ${category.category_name}
+                    ${isUrgent ? '<i class="fas fa-bolt ms-2 text-warning"></i>' : ''}
+                    </h5>
                                     <span class="price-tag ${isUrgent ? 'urgent-tag' : ''}">
-                                        ${category.base_price}
+                                    ${category.base_price}
                                     </span>
                                 </div>
                                 <p class="text-muted mb-3">${category.description || 'Standard appointment category'}</p>
-                                <div class="availability-indicator available" id="availability-${category.id}">
-                                    <i class="fas fa-check me-1"></i> Available
-                                </div>
-                            </div>
-                        </div>
-                    `;
-            });
+                                <div class="availability-indicator  ${total_remain < (category.limitdata / 2) ? 'limited' : 'available' }" id="availability-${category.id}">
+                                    <i class="fas fa-check me-1"></i> ${total_remain} Available 
+                                    </div>
+                                    </div>
+                                    </div>
+                                    `;
+                            } else {
+                                categoriesHTML += ` <div class="col-md-6">
+                        <h5 class="text-danger">
+                            ${category.category_name} Tokens have finished!
+                        </h5>
+                    </div>`
+                            }
+                        });
 
-            categoryContainer.innerHTML = categoriesHTML;
-            categorySection.style.display = 'block';
+                        categoryContainer.innerHTML = categoriesHTML;
+                        categorySection.style.display = 'block';
 
-            // Add event listeners to category cards
-            document.querySelectorAll('#tokenCategorySelection .token-type-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    document.querySelectorAll('#tokenCategorySelection .token-type-card').forEach(c => {
-                        c.classList.remove('selected');
-                    });
-                    this.classList.add('selected');
-                    selectedCategory = this.getAttribute('data-category-id');
-                    selectedPrice = this.getAttribute('data-price');
+                        // Add event listeners to category cards
+                        document.querySelectorAll('#tokenCategorySelection .token-type-card').forEach(card => {
+                            card.addEventListener('click', function() {
+                                document.querySelectorAll(
+                                    '#tokenCategorySelection .token-type-card').forEach(c => {
+                                    c.classList.remove('selected');
+                                });
+                                this.classList.add('selected');
+                                selectedCategory = this.getAttribute('data-category-id');
+                                selectedPrice = this.getAttribute('data-price');
 
-                    // Enable next button
-                    step2Next.disabled = false;
-                    updateSummary();
-                    checkAvailability();
-                });
-            });
+                                // Enable next button
+                                step2Next.disabled = false;
+                                updateSummary();
+                                // checkAvailability();
+                            });
+                        });
 
-            // Reset category selection
-            selectedCategory = null;
-            step2Next.disabled = true;
-        } else {
-            categoryContainer.innerHTML =
-                '<div class="col-12"><div class="alert alert-warning text-center">No categories available for this type</div></div>';
-            categorySection.style.display = 'block';
-            step2Next.disabled = true;
-        }
+                        // Reset category selection
+                        selectedCategory = null;
+                        step2Next.disabled = true;
+                    } else {
+                        categoryContainer.innerHTML =
+                            '<div class="col-12"><div class="alert alert-warning text-center">No categories available for this type</div></div>';
+                        categorySection.style.display = 'block';
+                        step2Next.disabled = true;
+                    }
+
+                } else {
+                    // doctorSelect.innerHTML = '<option value="">No doctors available</option>';
+                }
+            })
+
+
     }
 
     function navigateToStep(stepId) {
