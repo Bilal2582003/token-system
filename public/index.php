@@ -620,7 +620,7 @@ $csrfToken = $validation->generateCSRFToken();
                                     <div>
                                         <small class="d-block opacity-75">Email</small>
                                         <strong
-                                            class="fs-6"><?php echo htmlspecialchars($clinicInfo['email']); ?></strong>
+                                            class="fs-6 text-break"><?php echo htmlspecialchars($clinicInfo['email']); ?></strong>
                                     </div>
                                 </div>
                             </div>
@@ -872,10 +872,10 @@ $csrfToken = $validation->generateCSRFToken();
                 <!-- Footer -->
                 <div class="text-center mt-4">
                     <p class="text-white mb-0">
-                        &copy; 2024 <?php echo htmlspecialchars($clinicInfo['clinic_name']); ?>. All rights reserved.
+                        &copy; 2025 <?php echo htmlspecialchars($clinicInfo['clinic_name']); ?>. All rights reserved.
                     </p>
                     <p class="text-white-50 small">
-                        <i class="fas fa-lock me-1"></i>Your data is securely encrypted
+                        <i class="fas fa-lock me-1"></i>Your data is securely encrypted. Develop By Bilal 03132004039
                     </p>
                 </div>
             </div>
