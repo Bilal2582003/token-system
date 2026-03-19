@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2026 at 06:24 AM
+-- Generation Time: Mar 16, 2026 at 03:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -61,7 +61,6 @@ CREATE TABLE `doctors` (
   `email` varchar(255) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `is_active` tinyint(1) DEFAULT 1,
-  `password` varchar(50) DEFAULT NULL,
   `is_available` tinyint(1) DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -70,8 +69,8 @@ CREATE TABLE `doctors` (
 -- Dumping data for table `doctors`
 --
 
-INSERT INTO `doctors` (`id`, `name`, `specialization`, `email`, `phone`, `is_active`, `password`, `is_available`, `created_at`) VALUES
-(1, 'Sufi Muheet Tariqi.', 'General', 'admin@gmail.com', '031320040', 1, '123', 1, '2025-11-29 13:51:56');
+INSERT INTO `doctors` (`id`, `name`, `specialization`, `email`, `phone`, `is_active`, `is_available`, `created_at`) VALUES
+(1, 'Sufi Muheet Tariqi', NULL, NULL, NULL, 1, 1, '2025-11-29 13:51:56');
 
 -- --------------------------------------------------------
 
@@ -112,7 +111,6 @@ CREATE TABLE `special_closures` (
   `id` int(11) NOT NULL,
   `closure_date` date NOT NULL,
   `reason` varchar(255) DEFAULT NULL,
-  `doctor_id` int(11) NOT NULL,
   `affects_token_type` int(11) DEFAULT NULL COMMENT 'NULL affects all types',
   `affects_category` int(11) DEFAULT NULL COMMENT 'NULL affects all categories',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -122,9 +120,8 @@ CREATE TABLE `special_closures` (
 -- Dumping data for table `special_closures`
 --
 
-INSERT INTO `special_closures` (`id`, `closure_date`, `reason`, `doctor_id`, `affects_token_type`, `affects_category`, `created_at`) VALUES
-(1, '2026-03-19', 'Argent', 1, NULL, NULL, '2025-12-21 10:07:15'),
-(2, '2026-03-21', 'Due to Eid astana will be remain close. \r\nHAPPY EID TO ALL\r\nThanks you', 1, NULL, NULL, '2026-03-19 03:27:04');
+INSERT INTO `special_closures` (`id`, `closure_date`, `reason`, `affects_token_type`, `affects_category`, `created_at`) VALUES
+(1, '2024-12-25', 'Christmas Holiday', NULL, NULL, '2025-12-21 10:07:15');
 
 -- --------------------------------------------------------
 
@@ -156,14 +153,14 @@ CREATE TABLE `tokens` (
 --
 
 INSERT INTO `tokens` (`id`, `token_number`, `token_type_id`, `token_category_id`, `doctor_id`, `patient_name`, `patient_phone`, `patient_email`, `token_date`, `token_time`, `token_price`, `status`, `meeting_link`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 1, 'muhammad Bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-19', '00:20:08', 300.00, 'cancelled', NULL, 'for test', '2026-03-15 12:51:00', '2026-03-19 05:17:21'),
-(2, 2, 1, 1, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-19', '00:20:08', 200.00, 'cancelled', NULL, NULL, '2026-03-15 12:56:43', '2026-03-19 05:12:09'),
-(3, 3, 1, 1, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-19', '00:20:08', 200.00, 'pending', NULL, NULL, '2026-03-15 12:57:13', '2026-03-19 02:21:47'),
-(4, 4, 1, 1, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-19', '00:20:08', 200.00, 'pending', NULL, NULL, '2026-03-15 13:12:24', '2026-03-19 02:21:47'),
-(5, 1, 1, 2, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-19', '00:20:08', 500.00, 'pending', NULL, NULL, '2026-03-15 13:16:04', '2026-03-19 02:21:47'),
-(6, 2, 1, 2, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-19', '00:20:08', 500.00, 'pending', NULL, NULL, '2026-03-15 13:19:57', '2026-03-19 02:21:47'),
-(7, 5, 1, 1, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-19', '00:20:08', 200.00, 'pending', NULL, NULL, '2026-03-15 13:37:02', '2026-03-19 02:21:47'),
-(8, 6, 1, 1, 1, 'bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-19', '00:20:08', 200.00, 'confirmed', NULL, NULL, '2026-03-15 13:38:26', '2026-03-19 05:11:56');
+(1, 1, 1, 1, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-15', '00:20:08', 200.00, 'pending', NULL, NULL, '2026-03-15 12:51:00', '2026-03-15 12:51:00'),
+(2, 2, 1, 1, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-15', '00:20:08', 200.00, 'pending', NULL, NULL, '2026-03-15 12:56:43', '2026-03-15 12:56:43'),
+(3, 3, 1, 1, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-15', '00:20:08', 200.00, 'pending', NULL, NULL, '2026-03-15 12:57:13', '2026-03-15 12:57:13'),
+(4, 4, 1, 1, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-15', '00:20:08', 200.00, 'pending', NULL, NULL, '2026-03-15 13:12:24', '2026-03-15 13:12:24'),
+(5, 1, 1, 2, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-15', '00:20:08', 500.00, 'pending', NULL, NULL, '2026-03-15 13:16:04', '2026-03-15 13:16:04'),
+(6, 2, 1, 2, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-15', '00:20:08', 500.00, 'pending', NULL, NULL, '2026-03-15 13:19:57', '2026-03-15 13:19:57'),
+(7, 5, 1, 1, 1, 'muhammad bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-15', '00:20:08', 200.00, 'pending', NULL, NULL, '2026-03-15 13:37:02', '2026-03-15 13:37:02'),
+(8, 6, 1, 1, 1, 'bilal', '03132004039', 'huzaifa2582003@gmail.com', '2026-03-15', '00:20:08', 200.00, 'pending', NULL, NULL, '2026-03-15 13:38:26', '2026-03-15 13:38:26');
 
 -- --------------------------------------------------------
 
@@ -186,9 +183,9 @@ CREATE TABLE `token_categories` (
 --
 
 INSERT INTO `token_categories` (`id`, `category_name`, `token_type_id`, `description`, `base_price`, `is_active`, `created_at`) VALUES
-(1, 'normal', 1, 'Regular appointment', 300.00, 1, '2025-11-29 12:33:02'),
+(1, 'normal', 1, 'Regular appointment', 200.00, 1, '2025-11-29 12:33:02'),
 (2, 'urgent', 1, 'Urgent care appointment', 500.00, 1, '2025-11-29 12:33:02'),
-(3, 'normal-online', 2, '', 500.00, 1, '2025-11-29 14:20:27'),
+(3, 'normal-online', 2, NULL, 500.00, 1, '2025-11-29 14:20:27'),
 (4, 'urgent-online', 2, NULL, 1000.00, 1, '2025-11-29 14:20:43');
 
 -- --------------------------------------------------------
@@ -226,9 +223,9 @@ CREATE TABLE `token_limits` (
 --
 
 INSERT INTO `token_limits` (`id`, `token_type_id`, `token_category_id`, `daily_limit`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 10, 1, '2025-11-29 12:33:02', '2026-03-19 04:37:33'),
+(1, 1, 1, 7, 1, '2025-11-29 12:33:02', '2026-03-15 13:37:25'),
 (2, 1, 2, 5, 1, '2025-11-29 12:33:02', '2025-11-29 12:33:02'),
-(3, 2, 3, 8, 1, '2025-11-29 12:33:02', '2026-03-19 04:37:55'),
+(3, 2, 3, 8, 1, '2025-11-29 12:33:02', '2025-12-05 20:20:59'),
 (4, 2, 4, 2, 1, '2025-11-29 12:33:02', '2025-12-05 20:21:06');
 
 -- --------------------------------------------------------
@@ -278,12 +275,11 @@ CREATE TABLE `token_type_restrictions` (
 INSERT INTO `token_type_restrictions` (`id`, `token_type_id`, `doctor_id`, `day_of_week`, `is_allowed`, `start_date`, `end_date`, `notes`, `created_at`) VALUES
 (1, 2, 1, 1, 0, NULL, NULL, NULL, '2025-12-21 10:07:15'),
 (2, 1, 1, 1, 1, NULL, NULL, NULL, '2025-12-21 10:07:15'),
-(3, 1, 1, 2, 1, NULL, NULL, NULL, '2025-12-21 10:07:15'),
-(4, 1, 1, 3, 1, NULL, NULL, NULL, '2025-12-21 10:07:15'),
-(5, 1, 1, 5, 1, NULL, NULL, NULL, '2025-12-21 10:07:15'),
-(6, 2, 1, 6, 1, NULL, NULL, NULL, '2025-12-21 10:07:15'),
-(7, 1, 1, 6, 1, NULL, NULL, NULL, '2025-12-21 10:07:15'),
-(8, 2, 1, 4, 1, NULL, NULL, NULL, '2026-03-19 04:41:53');
+(3, 2, 0, 3, 0, NULL, NULL, NULL, '2025-12-21 10:07:15'),
+(4, 2, 0, 4, 0, NULL, NULL, NULL, '2025-12-21 10:07:15'),
+(5, 2, 0, 5, 0, NULL, NULL, NULL, '2025-12-21 10:07:15'),
+(6, 2, 0, 6, 0, NULL, NULL, NULL, '2025-12-21 10:07:15'),
+(7, 2, 0, 7, 1, NULL, NULL, NULL, '2025-12-21 10:07:15');
 
 --
 -- Indexes for dumped tables
@@ -392,7 +388,7 @@ ALTER TABLE `doctor_schedules`
 -- AUTO_INCREMENT for table `special_closures`
 --
 ALTER TABLE `special_closures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tokens`
@@ -422,13 +418,13 @@ ALTER TABLE `token_limits`
 -- AUTO_INCREMENT for table `token_types`
 --
 ALTER TABLE `token_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `token_type_restrictions`
 --
 ALTER TABLE `token_type_restrictions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
