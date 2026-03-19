@@ -82,7 +82,7 @@ $statusConfig = [
         }
 
         .main-content {
-            padding: 30px;
+            padding: 40px;
         }
 
         .page-header {
@@ -358,7 +358,7 @@ $statusConfig = [
             
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10">
-                <div class="main-content">
+                <div class="main-content"  id="mainContent">
                     <!-- Header -->
                     <div class="page-header d-flex justify-content-between align-items-center">
                         <div>

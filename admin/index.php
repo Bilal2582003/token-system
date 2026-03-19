@@ -232,7 +232,7 @@ if (!$doctor) {
         } */
         
         .main-content {
-            padding: 30px;
+            padding: 40px;
         }
         
         .profile-card {
@@ -432,7 +432,7 @@ if (!$doctor) {
             
             <!-- Main Content -->
             <div class="col-md-9 col-lg-10">
-                <div class="main-content">
+                <div class="main-content"  id="mainContent">
                     <!-- Logout Button -->
                     <!-- <a href="?logout=1" class="btn logout-btn">
                         <i class="fas fa-sign-out-alt me-2"></i>Logout
