@@ -67,7 +67,7 @@ if (isset($_GET['logout'])) {
      <div class="logo">
          <img src="../assets/images/astana-logo.PNG" alt="Logo">
          <h5 class="mt-3">Admin Panel</h5>
-         <p class="text-white-50 small">Doctor Management</p>
+         <p class="text-white-50 small">Management Sys</p>
      </div>
 
      <nav class="nav flex-column">
