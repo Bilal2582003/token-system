@@ -35,7 +35,8 @@ $csrfToken = $validation->generateCSRFToken();
         /* --primary-color: #2c3e50; */
         /* --secondary-color: #3498db; */
         --primary-color: #df12cb;
-        --secondary-color: #3498db;
+        /* --secondary-color: #3498db; */
+        --secondary-color: #f8a4d8;
         --accent-color: #e74c3c;
         --success-color: #27ae60;
         --warning-color: #f39c12;
@@ -50,7 +51,7 @@ $csrfToken = $validation->generateCSRFToken();
 
     body {
         /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-        background: linear-gradient(135deg, #f58feb 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #f8a4d8 0%, #df12cb 100%);
         min-height: 100vh;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         overflow-x: hidden;

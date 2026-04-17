@@ -7,12 +7,13 @@ then complete token book -> DONE
 Easy paisa integeration -> NOT
 Special clourse with doctor_id set in code -> NOT
 token_limits doctor_id sy bind hona ha 
+special clourse delete -> Not
 
 ---Admin panel start---
 Profile Page -> DONE
 date schedule and special closure -> DONE 
-astana whatsapp group  
-Token type and token category crud DONE
+astana whatsapp group -> Done  
+Token type and token category crud -> DONE
 
 now set master project as updated work
 
